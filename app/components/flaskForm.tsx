@@ -6,7 +6,7 @@ export function FlaskForm() {
 
   async function submit(formData: FormData) {
     try {
-      const response = await fetch("http://localhost:3000/api/submit", {method: "POST", body: formData});
+      const response = await fetch("/api/submit", {method: "POST", body: formData});
 
       if (!response.ok) {
         throw new Error("Oops! An error occurred");
