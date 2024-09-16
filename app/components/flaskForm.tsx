@@ -1,20 +1,20 @@
-"use client";
-import React from "react";
-import {Button} from "~/components/ui/button";
-import {Input} from "~/components/ui/input";
-import {Label} from "~/components/ui/label";
+'use client';
+import React from 'react';
+import { Button } from '~/components/ui/button';
+import { Input } from '~/components/ui/input';
+import { Label } from '~/components/ui/label';
 
 export function FlaskForm() {
-  const [data, setData] = React.useState<{firstName: string; lastName: string; availability: string[]} | null>(null);
+  const [data, setData] = React.useState<{ firstName: string; lastName: string; availability: string[] } | null>(null);
   const [error, setError] = React.useState<string | null>(null);
 
   async function submit(formData: FormData) {
     try {
-      const response = await fetch("/api/submit", {method: "POST", body: formData});
+      const response = await fetch('/api/submit', { method: 'POST', body: formData });
       if (!response.ok) {
-        throw new Error("Oops! An unexpected occurred");
+        throw new Error('Oops! An unexpected occurred');
       }
-      const result: {firstName: string; lastName: string; availability: string[]} = await response.json();
+      const result: { firstName: string; lastName: string; availability: string[] } = await response.json();
       setData(result);
     } catch (error: any) {
       setError(error.toString());
@@ -25,9 +25,9 @@ export function FlaskForm() {
       <form action={submit}>
         <div className="w-full flex gap-5 flex-col items-center justify-center">
           <Label>First Name</Label>
-          <Input className="text-black" name="firstName" />
+          <Input name="firstName" />
           <Label>Last Name</Label>
-          <Input className="text-black" name="lastName" />
+          <Input name="lastName" />
           <Label>Availability</Label>
           <div className="w-full  flex justify-center flex-wrap gap-4">
             <AvailabilityCheckBox nameValue="monday" />
@@ -61,10 +61,10 @@ export function FlaskForm() {
 interface AvailabilityCheckBoxProps {
   nameValue: string;
 }
-function AvailabilityCheckBox({nameValue}: AvailabilityCheckBoxProps) {
+function AvailabilityCheckBox({ nameValue }: AvailabilityCheckBoxProps) {
   return (
     <Label className="flex items-center gap-2">
-      <Input type="checkbox" name={"availability"} value={nameValue} />
+      <Input type="checkbox" name={'availability'} value={nameValue} />
       {nameValue.charAt(0).toUpperCase() + nameValue.slice(1)}
     </Label>
   );
