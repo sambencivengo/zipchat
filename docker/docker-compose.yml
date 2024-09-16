@@ -1,0 +1,11 @@
+services:
+  db:
+    image: postgres:13
+    restart: always
+    container_name: zipchat-psql
+    ports:
+      - '${POSTGRES_DEV_PORT}:5433'
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: zipchat
