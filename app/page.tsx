@@ -1,9 +1,11 @@
 import {FlaskForm} from "~/app/components/flaskForm";
+import {PageLayout} from "~/app/components/layouts/pageLayout";
+import {cn} from "~/lib/utils";
 
 export default async function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
+    <PageLayout>
       <FlaskForm />
-    </main>
+    </PageLayout>
   );
 }

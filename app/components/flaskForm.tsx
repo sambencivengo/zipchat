@@ -21,20 +21,23 @@ export function FlaskForm() {
     }
   }
   return (
-    <div className="flex w-full flex-col justify-center p-10 border rounded-md">
+    <div className="container mx-auto flex max-w-lg  flex-col justify-center p-10 border rounded-md">
       <form action={submit}>
-        <div className="w-full flex gap-2 flex-col items-center justify-center">
+        <div className="w-full flex gap-5 flex-col items-center justify-center">
           <Label>First Name</Label>
           <Input className="text-black" name="firstName" />
           <Label>Last Name</Label>
           <Input className="text-black" name="lastName" />
-          <AvailabilityCheckBox nameValue="monday" />
-          <AvailabilityCheckBox nameValue="tuesday" />
-          <AvailabilityCheckBox nameValue="wednesday" />
-          <AvailabilityCheckBox nameValue="thursday" />
-          <AvailabilityCheckBox nameValue="friday" />
-          <AvailabilityCheckBox nameValue="saturday" />
-          <AvailabilityCheckBox nameValue="sunday" />
+          <Label>Availability</Label>
+          <div className="w-full  flex justify-center flex-wrap gap-4">
+            <AvailabilityCheckBox nameValue="monday" />
+            <AvailabilityCheckBox nameValue="tuesday" />
+            <AvailabilityCheckBox nameValue="wednesday" />
+            <AvailabilityCheckBox nameValue="thursday" />
+            <AvailabilityCheckBox nameValue="friday" />
+            <AvailabilityCheckBox nameValue="saturday" />
+            <AvailabilityCheckBox nameValue="sunday" />
+          </div>
           {error && <p className="text-error">{error}</p>}
           <Button type="submit">Submit</Button>
           {data && (
