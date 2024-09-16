@@ -14,9 +14,9 @@ def get_db():
     return db
 
 
-@app.route("/api/python")
-def hello_world():
-    return "<p>Hello, World!</p>"
+@app.route("/api/flask")
+def flask():
+    return "<h1>Welcome to the Flask backend 😎</h1>"
 
 
 @app.route("/api/submit", methods=["POST"])
