@@ -1,33 +1,33 @@
 "use client";
 import React from "react";
+import {Button} from "~/components/ui/button";
+import {Input} from "~/components/ui/input";
+import {Label} from "~/components/ui/label";
 
 export function FlaskForm() {
   const [data, setData] = React.useState<{firstName: string; lastName: string; availability: string[]} | null>(null);
+  const [error, setError] = React.useState<string | null>(null);
 
   async function submit(formData: FormData) {
     try {
       const response = await fetch("/api/submit", {method: "POST", body: formData});
-
       if (!response.ok) {
-        throw new Error("Oops! An error occurred");
+        throw new Error("Oops! An unexpected occurred");
       }
-
       const result: {firstName: string; lastName: string; availability: string[]} = await response.json();
-      const {availability, firstName, lastName} = result;
-      console.log({availability, firstName, lastName});
       setData(result);
-    } catch (error) {
-      console.log(error);
+    } catch (error: any) {
+      setError(error.toString());
     }
   }
   return (
-    <div className=" flex flex-col justify-center border-2 rounded-md p-10">
+    <div className="flex w-full flex-col justify-center p-10 border rounded-md">
       <form action={submit}>
         <div className="w-full flex gap-2 flex-col items-center justify-center">
-          <label>First Name</label>
-          <input className="text-black" name="firstName" />
-          <label>Last Name</label>
-          <input className="text-black" name="lastName" />
+          <Label>First Name</Label>
+          <Input className="text-black" name="firstName" />
+          <Label>Last Name</Label>
+          <Input className="text-black" name="lastName" />
           <AvailabilityCheckBox nameValue="monday" />
           <AvailabilityCheckBox nameValue="tuesday" />
           <AvailabilityCheckBox nameValue="wednesday" />
@@ -35,14 +35,18 @@ export function FlaskForm() {
           <AvailabilityCheckBox nameValue="friday" />
           <AvailabilityCheckBox nameValue="saturday" />
           <AvailabilityCheckBox nameValue="sunday" />
-          <button className="bg-white text-black p-2 rounded-md hover:bg-green-200" type="submit">
-            Submit
-          </button>
+          {error && <p className="text-error">{error}</p>}
+          <Button type="submit">Submit</Button>
           {data && (
             <div>
               <p>
-                {data.firstName} {data.lastName} {data.availability.map((day) => day)}
+                {data.firstName} {data.lastName}
               </p>
+              <div className="flex flex-row gap-2">
+                {data.availability.map((day, idx) => (
+                  <p key={idx}>{day.charAt(0).toUpperCase() + day.slice(1)}</p>
+                ))}
+              </div>
             </div>
           )}
         </div>
@@ -56,9 +60,9 @@ interface AvailabilityCheckBoxProps {
 }
 function AvailabilityCheckBox({nameValue}: AvailabilityCheckBoxProps) {
   return (
-    <label className="flex flex-row gap-2">
-      <input type="checkbox" name={"availability"} value={nameValue} />
+    <Label className="flex items-center gap-2">
+      <Input type="checkbox" name={"availability"} value={nameValue} />
       {nameValue.charAt(0).toUpperCase() + nameValue.slice(1)}
-    </label>
+    </Label>
   );
 }
